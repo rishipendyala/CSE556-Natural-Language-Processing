@@ -19,14 +19,10 @@ class Word2VecDataset(Dataset):
             vocab = set([token for sentence in tokenized_sentences for token in sentence])
             data = []
             for sentence in tokenized_sentences:
-                for idx, word in enumerate(sentence):
-                    context = []
-                    for neighbor in range(-self.window_size, self.window_size + 1):
-                        if neighbor != 0 and 0 <= idx + neighbor < len(sentence):
-                            context.append(sentence[idx + neighbor])
-                    if context:
-                        data.append((context, word))
-            return data, list(vocab)
+                count = 0
+                for word in enumerate(sentence):
+                    pass
+                    
         
 
 class Word2VecModel(nn.Module):
