@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 import json
-from task1.py import WordPieceTokenizer
+from task1 import WordPieceTokenizer
 
 class Word2VecDataset(Dataset):
     def __init__(self, data, tokenizer, corpus, window_size = 2):
@@ -20,22 +20,12 @@ class Word2VecDataset(Dataset):
             data = []
             for sentence in tokenized_sentences:
                 count = 0
-                for word in enumerate(sentence):
+                for word in sentence:
                     pass
                     
         
 
-class Word2VecModel(nn.Module):
-    def __init__(self, vocab_size, embedding_dim):
-        super(Word2VecModel, self).__init__()
-        self.embeddings = nn.Embedding(vocab_size, embedding_dim)
-        self.linear = nn.Linear(embedding_dim, vocab_size)
-
-    def forward(self, context):
-        context_embeds = self.embeddings(context)
-        avg_context_embeds = context_embeds.mean(dim=1)
-        out = self.linear(avg_context_embeds)
-        return out
+# class Word2VecModel(nn.Module):
 
 
 def train(corpus, context_window, embedding_dim, epochs, batch_size, learning_rate):
