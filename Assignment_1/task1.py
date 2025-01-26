@@ -1,3 +1,7 @@
+import re
+import json
+from collections import defaultdict, Counter
+
 class WordPieceTokenizer:
     def __init__(self):
         self.vocab = []
@@ -107,3 +111,12 @@ class WordPieceTokenizer:
                     else:
                         tokens.append(word[i])
         return tokens
+
+if __name__ == "__main__":
+    corpus_file = 'corpus.txt'
+    with open(corpus_file, 'r') as f:
+        corpus = f.readlines()
+    
+    tokenizer = WordPieceTokenizer()
+    tokenizer.construct_vocabulary(corpus, vocab_size=1000)
+    print(tokenizer.tokenize("hugging is crappy and quick and just fuzzy impostor two custom dumping blush"))
