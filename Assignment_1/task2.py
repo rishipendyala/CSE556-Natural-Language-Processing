@@ -46,6 +46,8 @@ class Word2VecDataset(Dataset):
         target_index = self.word_to_index[target_word]
         return (context_indices, target_index)
 
+        # return (context_words, target_word)
+
 class Word2VecModel(nn.Module):
     def __init__(self, vocab_size, embedding_dim, context_size):
         super().__init__()
@@ -53,7 +55,7 @@ class Word2VecModel(nn.Module):
         self.linear = nn.Linear(embedding_dim, vocab_size)
     
     def forward(self, context_words, target_word):
-        embeddings = self.embedding(context_words).mean(1).squeeze(1)
+        embeddings = self.embedding(context_words).mean(1)
         return self.linear(embeddings)
 
 def train(corpus, embedding_dim, context_size, learning_rate, epochs, batch_size):
@@ -63,6 +65,10 @@ def train(corpus, embedding_dim, context_size, learning_rate, epochs, batch_size
     
     dataset = Word2VecDataset(tokenizer, corpus)
     print(f"Dataset created with {len(dataset)} samples")
+
+    # for i in range(len(dataset)):
+    #     print(dataset[i])
+
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     print(f"DataLoader created with {len(dataloader)} batches")
 
@@ -82,6 +88,7 @@ def train(corpus, embedding_dim, context_size, learning_rate, epochs, batch_size
             context_data.append(padded_context)
             target_data.append(dataset[i][1])
             print(f"Padded sample {i} with zeros")
+            # continue
 
     context_data = torch.tensor(context_data)
     target_data = torch.tensor(target_data)
@@ -96,7 +103,7 @@ def train(corpus, embedding_dim, context_size, learning_rate, epochs, batch_size
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            print(f'Epoch {epoch + 1}/{epochs}, Current loss: {loss.item():.4f}')
+        print(f'Epoch {epoch + 1}/{epochs}, Current loss: {loss.item():.4f}')
 
     torch.save(model.state_dict(), 'word2vec_model.pth')
     return model
@@ -106,8 +113,8 @@ if __name__ == "__main__":
 
 
     tokenizer = WordPieceTokenizer()
-    with open("sample_test.txt", "r") as file:
+    with open("corpus.txt", "r") as file:
         corpus = file.readlines()
 
-    model = train(corpus, embedding_dim=100, context_size=2, learning_rate=0.001, epochs=1000, batch_size=32)
+    model = train(corpus, embedding_dim=100, context_size=2, learning_rate=0.001, epochs=100, batch_size=32)
     print(model.embedding.weight)
