@@ -316,10 +316,10 @@ def train(corpus, embedding_dim, context_size, learning_rate, epochs, batch_size
     plt.title('Training and Validation Loss Over Time')
     plt.legend()
     plt.grid(True)
-    plt.savefig('training_loss.png')
+    plt.savefig('training_loss1.png')
     plt.close()
 
-    torch.save(model.state_dict(), 'word2vec_model.pth')
+    torch.save(model, 'word2vec_model1.pth')
     return model, train_losses, val_losses
 
 
