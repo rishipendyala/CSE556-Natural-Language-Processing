@@ -1,3 +1,5 @@
+#TASK 1
+
 import re
 import json
 from collections import defaultdict, Counter
@@ -126,19 +128,5 @@ if __name__ == "__main__":
         corpus = f.readlines()
     
     tokenizer = WordPieceTokenizer()
-    tokenizer.construct_vocabulary(corpus, vocab_size=1000)
-    print(tokenizer.tokenize("hugging is crappy and quick and just fuzzy impostor two custom dumping blush"))
-    
-    # Test the new mappings
-    print("\nTesting word_to_index mapping:")
-    for word in list(tokenizer.word_to_index.keys())[:5]:
-        print(f"{word}: {tokenizer.word_to_index[word]}")
-
-if __name__ == "__main__":
-    corpus_file = 'corpus.txt'
-    with open(corpus_file, 'r') as f:
-        corpus = f.readlines()
-    
-    tokenizer = WordPieceTokenizer()
-    tokenizer.construct_vocabulary(corpus, vocab_size=1000)
+    tokenizer.construct_vocabulary(corpus, vocab_size=6000)
     print(tokenizer.tokenize("hugging is crappy and quick and just fuzzy impostor two custom dumping blush"))
