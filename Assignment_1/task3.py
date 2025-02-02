@@ -18,6 +18,10 @@ class NeuralLMDataset(Dataset):
         self.embedding_dim = self.word2vec_model.embedding.weight.shape[1]
         
     def preprocess_data(self):
+        '''
+        Preprocess the data by tokenizing the sentences, splitting the data into training 
+        and validation sets, and creating sequences of context words and target words.
+        '''
         tokenized_sentences = []
         for sentence in self.corpus:
             
@@ -60,6 +64,9 @@ class NeuralLMDataset(Dataset):
         return torch.tensor(context_indices), torch.tensor(target_index)
 
     def get_validation_data(self):
+        '''
+        Get the validation data as tensors
+        '''
         val_contexts = [item[0] for item in self.val_data]
         val_targets = [item[1] for item in self.val_data]
         return torch.tensor(val_contexts), torch.tensor(val_targets) #Convert data to tensors
@@ -152,6 +159,9 @@ class NeuralLM3(nn.Module):
         self.layer_norm2 = nn.LayerNorm(512)
 
     def forward(self, x):
+        '''
+        Forward pass of the model with residual connections
+        '''
         x = self.embedding(x).view(x.size(0), -1)
         identity = self.fc1(x)
         x = self.dropout(self.layer_norm1(self.leaky_relu(self.fc1(x))))
@@ -163,6 +173,9 @@ class NeuralLM3(nn.Module):
         return x
 
 def compute_accuracy(model, data_loader):
+    '''
+    Accuracy is calculated as the number of correct predictions divided by the total number of samples
+    '''
     model.eval() #Set model to evaluation mode
     correct = 0
     total = 0
@@ -176,6 +189,9 @@ def compute_accuracy(model, data_loader):
     return acc
 
 def compute_perplexity(model, data_loader, criterion):
+    '''
+    Perplexity is calculated as the exponential of the loss
+    '''
     model.eval()
     total_loss = 0
     total_tokens = 0
@@ -189,6 +205,10 @@ def compute_perplexity(model, data_loader, criterion):
     return torch.exp(torch.tensor(avg_loss))
 
 def train(model, train_loader, val_loader, criterion, optimizer, epochs, early_stopping=False):
+    '''
+    Train the model using the training data and validate it using the validation data
+    Early stopping is used to prevent overfitting
+    '''
     train_losses = []
     val_losses = []
     
@@ -197,6 +217,7 @@ def train(model, train_loader, val_loader, criterion, optimizer, epochs, early_s
     patience_counter = 0
 
     for epoch in range(epochs):
+        
         # Training phase
         model.train()
         total_train_loss = 0
@@ -240,6 +261,9 @@ def train(model, train_loader, val_loader, criterion, optimizer, epochs, early_s
     return train_losses, val_losses
 
 def predict_next_tokens(model, tokenizer, sentence, num_tokens=3):
+    '''
+    predict the next tokens in a sentence using the model
+    '''
     model.eval()
     tokens = tokenizer.tokenize(sentence)
     predictions = []
@@ -318,54 +342,75 @@ else:
             print(f"\n{model_name} predictions for: {sentence}")
             print(f"Next three tokens: {predictions}")
 
-epochs = 10
-#Test samples
-with open("sample_test.txt", "r") as file:
-    test_sentences = file.readlines()
-    
-#Train and evaluate each model
-for model_name, model in models:
-    print(f"\nTraining {model_name}")
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
-    
-    #Train the model
-    train_losses, val_losses = train(model, train_loader, val_loader, criterion, optimizer, epochs)
-    
-    #save the model
-    torch.save(model.state_dict(), f'{model_name}.pth')
-    
-    #Plot losses
-    plt.figure(figsize=(10, 6))
-    plt.plot(train_losses, label='Training Loss')
-    plt.plot(val_losses, label='Validation Loss')
-    plt.title(f'{model_name} - Training and Validation Loss')
-    plt.xlabel('Epochs')
-    plt.ylabel('Loss')
-    plt.legend()
-    plt.savefig(f'{model_name}_loss.png')
-    plt.close()
-    
-    #Compute metrics
-    train_accuracy = compute_accuracy(model, train_loader)
-    val_accuracy = compute_accuracy(model, val_loader)
-    train_perplexity = compute_perplexity(model, train_loader, criterion)
-    val_perplexity = compute_perplexity(model, val_loader, criterion)
-    
-    print(f"\n{model_name} Results:")
-    print(f"Train Accuracy: {train_accuracy}")
-    print(f"Validation Accuracy: {val_accuracy}")
-    print(f"Train Perplexity: {train_perplexity}")
-    print(f"Validation Perplexity: {val_perplexity}")
-    
-#Test prediction on test samples
-with open("sample_test.txt", "r") as file:
-    test_sentences = file.readlines()
+n = input("Test or Train: ")
 
-print("\nPredicting next tokens for test sentences:")
-for sentence in test_sentences:
-    sentence = sentence.strip()
+if n.lower() == "train":
+    epochs = 10
+    #Test samples
+    with open("sample_test.txt", "r") as file:
+        test_sentences = file.readlines()
+        
+    #Train and evaluate each model
     for model_name, model in models:
-        predictions = predict_next_tokens(model, tokenizer, sentence)
-        print(f"\n{model_name} predictions for: {sentence}")
-        print(f"Next three tokens: {predictions}")
+        print(f"\nTraining {model_name}")
+        criterion = nn.CrossEntropyLoss()
+        optimizer = optim.Adam(model.parameters(), lr=0.001)
+        
+        #Train the model
+        train_losses, val_losses = train(model, train_loader, val_loader, criterion, optimizer, epochs)
+        
+        #save the model
+        torch.save(model.state_dict(), f'{model_name}.pth')
+        
+        #Plot losses
+        plt.figure(figsize=(10, 6))
+        plt.plot(train_losses, label='Training Loss')
+        plt.plot(val_losses, label='Validation Loss')
+        plt.title(f'{model_name} - Training and Validation Loss')
+        plt.xlabel('Epochs')
+        plt.ylabel('Loss')
+        plt.legend()
+        plt.savefig(f'{model_name}_loss.png')
+        plt.close()
+        
+        #Compute metrics
+        train_accuracy = compute_accuracy(model, train_loader)
+        val_accuracy = compute_accuracy(model, val_loader)
+        train_perplexity = compute_perplexity(model, train_loader, criterion)
+        val_perplexity = compute_perplexity(model, val_loader, criterion)
+        
+        print(f"\n{model_name} Results:")
+        print(f"Train Accuracy: {train_accuracy}")
+        print(f"Validation Accuracy: {val_accuracy}")
+        print(f"Train Perplexity: {train_perplexity}")
+        print(f"Validation Perplexity: {val_perplexity}")
+        
+    #Test prediction on test samples
+    with open("sample_test.txt", "r") as file:
+        test_sentences = file.readlines()
+
+    print("\nPredicting next tokens for test sentences:")
+    for sentence in test_sentences:
+        sentence = sentence.strip()
+        for model_name, model in models:
+            predictions = predict_next_tokens(model, tokenizer, sentence)
+            print(f"\n{model_name} predictions for: {sentence}")
+            print(f"Next three tokens: {predictions}")
+
+#implementting pipeline for test.txt file
+print("\nImplementing pipeline for test.txt file:")
+file_path = "test.txt"
+if not os.path.exists(file_path):
+    print(f"Error: The file '{file_path}' does not exist.")
+else:
+    print("Predicting next tokens for test sentences:")
+    with open(file_path, "r") as file:
+        test_sentences = file.readlines()
+    for sentence in test_sentences:
+        sentence = sentence.strip()
+        for model_name, model in models:
+            #load the model
+            model.load_state_dict(torch.load(f'{model_name}.pth'))
+            predictions = predict_next_tokens(model, tokenizer, sentence)
+            print(f"\n{model_name} predictions for: {sentence}")
+            print(f"Next three tokens: {predictions}")
