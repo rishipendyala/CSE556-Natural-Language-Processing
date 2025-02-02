@@ -34,7 +34,7 @@ class WordPieceTokenizer:
         Preprocess text - lowercase, remove punctuation, remove redundant spaces
         '''
         text = text.lower()
-        text = re.sub(r'[^a-zA-Z0-9\s]', '', text) # remove punctuation
+        text = re.sub(r'([^\w\s])', r' \1 ', text)  # separate punctuation with spaces
         text = re.sub(r'\s+', ' ', text).strip() # remove extra spaces
         return text
 
@@ -167,7 +167,8 @@ class WordPieceTokenizer:
         if ((element1.startswith('##')) and (not element2.startswith('##'))):
             return False
 
-        # two regular elements - invalid pair
+        # two starting elements - invalid pair
+        # 'hello' and 'world' - invalid pair
         if ((not element1.startswith('##')) and (not element2.startswith('##'))):
             return False
 
@@ -261,7 +262,7 @@ class WordPieceTokenizer:
         - Word in vocab - directly added
         - Word not in vocab - split into chars and append
         '''
-        sentence = self.preprocess_data(sentence)
+        # sentence = self.preprocess_data(sentence)
         words = sentence.split()
         tokens = []
         for word in words:
