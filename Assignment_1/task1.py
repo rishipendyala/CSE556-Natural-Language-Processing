@@ -262,7 +262,7 @@ class WordPieceTokenizer:
         - Word in vocab - directly added
         - Word not in vocab - split into chars and append
         '''
-        # sentence = self.preprocess_data(sentence)
+        sentence = sentence.lower()
         words = sentence.split()
         tokens = []
         for word in words:
