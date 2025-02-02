@@ -27,11 +27,12 @@ class WordPieceTokenizer:
     def __init__(self):
         self.vocab = []
         self.element_freq = {}  
-        self.word_to_index = {}  # Added mapping
-        self.index_to_word = {}  # Added mapping
+        self.word_to_index = {}  
+        self.index_to_word = {}
+        
     def preprocess_data(self, text):
         '''
-        Preprocess text - lowercase, remove punctuation, remove redundant spaces
+        Preprocess text - lowercase, separate punctuation from words, remove redundant spaces
         '''
         text = text.lower()
         text = re.sub(r'([^\w\s])', r' \1 ', text)  # separate punctuation with spaces
