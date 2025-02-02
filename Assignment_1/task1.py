@@ -99,6 +99,10 @@ class WordPieceTokenizer:
             print("Iteration Complete")
             print("------------------------------------------------------")
 
+        # add special tokens - reference: https://huggingface.co/learn/nlp-course/en/chapter6/6
+        # [PAD] - padding token - for padding sequences to same/desired length
+        # [UNK] - unknown token - OOV words
+        self.vocab = ['[PAD]', '[UNK]'] + self.vocab
         # Save vocab
         self.save_vocabulary()
 
@@ -273,7 +277,7 @@ class WordPieceTokenizer:
                         tokens.append(f'##{word[i]}')
                     # else - append char as is
                     else:
-                        tokens.append(word[i])
+                        tokens.append('[UNK]') # unknown token
         return tokens
 
 def main():
@@ -289,7 +293,7 @@ def main():
 
     # train tokenizer
     tokenizer = WordPieceTokenizer()
-    tokenizer.construct_vocabulary(corpus, vocab_size=1000) 
+    tokenizer.construct_vocabulary(corpus, vocab_size=10000) 
 
     # load test data
     with open(test_file, "r") as f:
@@ -297,8 +301,9 @@ def main():
 
     # tokenise
     tokenized_data = {}
-    for id, sentence in test_data.items():
-        tokenized_data[id] = tokenizer.tokenize(sentence)
+    for entry in test_data:
+        sentence = entry['sentence']
+        tokenized_data[entry['id']] = tokenizer.tokenize(sentence)
 
     # save tokenised output
     with open(output_file, "w") as f:
