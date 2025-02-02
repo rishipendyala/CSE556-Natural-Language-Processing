@@ -72,7 +72,17 @@ class Word2VecDataset(Dataset):
 
 
 class Word2VecModel(nn.Module):
+    '''
+    Reference:
+    https://www.youtube.com/watch?v=Rqh4SRcZuDA : Video taken as reference to understand the architecture
+    https://medium.com/towards-data-science/word2vec-with-pytorch-implementing-original-paper-2cd7040120b0 : Read through to understand the workimng of the architecture and to understand what each function does
+    '''
     def __init__(self, vocab_size, embedding_dim, context_size):
+        '''
+        Initialize the model:
+        - Embedding layer: Converts word indices to word vectors
+        - Linear layer: Linear transformation to vocab_size dimensions
+        '''
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
         self.linear1 = nn.Linear(embedding_dim, vocab_size)
@@ -283,9 +293,9 @@ if __name__ == "__main__":
         corpus = file.readlines()
     vocab_file = "vocabulary_66.txt"
     
-    model, train_losses, val_losses, dataset = train(corpus, embedding_dim=100, context_size=2, learning_rate=0.001, epochs=20, batch_size=32, vocab_file=vocab_file)
-    torch.save(dataset, 'dataset.pth')
-    print(model.embedding.weight)
+    # model, train_losses, val_losses, dataset = train(corpus, embedding_dim=100, context_size=2, learning_rate=0.001, epochs=20, batch_size=32, vocab_file=vocab_file)
+    # torch.save(dataset, 'dataset.pth')
+    # print(model.embedding.weight)
 
     model = torch.load('word2vec_model1.pth')
     dataset = torch.load('dataset.pth')
