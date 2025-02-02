@@ -324,24 +324,6 @@ models = [
     ('NeuralLM_3', NeuralLM3(word2vec, vocab_size, context_size, embedding_dim))
 ]
 
-#implementting pipeline for test.txt file
-print("\nImplementing pipeline for test.txt file:")
-file_path = "test.txt"
-if not os.path.exists(file_path):
-    print(f"Error: The file '{file_path}' does not exist.")
-else:
-    print("Predicting next tokens for test sentences:")
-    with open(file_path, "r") as file:
-        test_sentences = file.readlines()
-    for sentence in test_sentences:
-        sentence = sentence.strip()
-        for model_name, model in models:
-            #load the model
-            model.load_state_dict(torch.load(f'{model_name}.pth'))
-            predictions = predict_next_tokens(model, tokenizer, sentence)
-            print(f"\n{model_name} predictions for: {sentence}")
-            print(f"Next three tokens: {predictions}")
-
 n = input("Test or Train: ")
 
 if n.lower() == "train":
