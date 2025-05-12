@@ -39,7 +39,7 @@
 
 ## 📂 Assignment Breakdown
 
-### 📝 Assignment 1
+### Assignment 1
 
 #### Task 1: WordPiece Tokenizer
 - Implemented a custom WordPiece tokenizer **from scratch** using only standard Python libraries.
@@ -60,7 +60,7 @@
 
 ---
 
-### 📝 Assignment 2
+### Assignment 2
 
 #### Task 1: Aspect Term Extraction (ATE)
 - Sequence labeling using RNNs/GRUs with GloVe/FastText  
@@ -76,7 +76,7 @@
 
 ---
 
-### 📝 Assignment 3 
+### Assignment 3 
 
 #### Task 1: Transformer from Scratch
 - Implementation of transformer components (positional encoding, self-attention, etc.)  
@@ -96,10 +96,10 @@
 ## 📊 Deliverables
 
 Each assignment includes:
-- 📜 Well-documented source code (with training, inference, and evaluation pipelines)
-- 📝 Reports with architecture choices, hyperparameters, loss curves, evaluation metrics
-- 📦 Saved model checkpoints for reproducibility
-- 📈 Plots for loss, accuracy, perplexity, and metric trends
+-  Well-documented source code (with training, inference, and evaluation pipelines)
+-  Reports with architecture choices, hyperparameters, loss curves, evaluation metrics
+-  Saved model checkpoints for reproducibility
+-  Plots for loss, accuracy, perplexity, and metric trends
 
 ---
 
