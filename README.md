@@ -93,16 +93,6 @@
 
 ---
 
-## 📊 Deliverables
-
-Each assignment includes:
--  Well-documented source code (with training, inference, and evaluation pipelines)
--  Reports with architecture choices, hyperparameters, loss curves, evaluation metrics
--  Saved model checkpoints for reproducibility
--  Plots for loss, accuracy, perplexity, and metric trends
-
----
-
 ## 🤝 Acknowledgements
 
 This work was completed under the mentorship of [Dr. Shad Akhtar](https://scholar.google.co.in/citations?user=KUcO6LAAAAAJ&hl=en), whose lectures and assignments deeply strengthened my understanding of modern NLP techniques.
