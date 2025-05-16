@@ -1,10 +1,14 @@
 # CSE556: Natural Language Processing
 
-📚 **Course:** [Natural Language Processing (CSE556)](https://techtree.iiitd.edu.in/viewDescription/filename?=CSE556)   
-👨‍🏫 **Instructor:** [Dr. Shad Akhtar](https://scholar.google.co.in/citations?user=KUcO6LAAAAAJ&hl=en), IIIT-Delhi  
-🧠 **Semester:** Winter 2025
-🧠 **Institute:** IIIT Delhi 
-🛠️ **Repo Overview:** This repository contains all the assignments submitted as part of the graduate-level NLP course, covering core and advanced topics in language modeling, sentiment analysis, question answering, and multimodal understanding.
+📚 **Course:**  [Natural Language Processing (CSE556)](https://techtree.iiitd.edu.in/viewDescription/filename?=CSE556)
+
+👨‍🏫 **Instructor:**  [Dr. Shad Akhtar](https://scholar.google.co.in/citations?user=KUcO6LAAAAAJ&hl=en), IIIT-Delhi
+
+🧠 **Semester:**  Winter 2025
+
+🏫 **Institute:**  IIIT Delhi
+
+🛠️ **Repo Overview:**  This repository contains all the assignments submitted as part of the graduate-level NLP course, covering core and advanced topics in language modeling, sentiment analysis, question answering, and multimodal understanding.
 
 ---
 
