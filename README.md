@@ -96,7 +96,7 @@
 ## 🤝 Acknowledgements
 
 This work was completed under the mentorship of [Dr. Shad Akhtar](https://scholar.google.co.in/citations?user=KUcO6LAAAAAJ&hl=en), whose lectures and assignments deeply strengthened my understanding of modern NLP techniques.
-This work was done in a group of three collaborators: Akshat Chaw Parmar, Rishi Pendyala and Vimal Jayant Subburaj
+This work was done in a group of three collaborators: [Akshat Chaw Parmar](https://github.com/akshatparmar2634), [Rishi Pendyala](https://github.com/rishipendyala) and [Vimal Jayant Subburaj](https://github.com/VimalJ5) and has been forked from this [repository](https://github.com/akshatparmar2634/NLP-Assignments)
 
 ---
 
